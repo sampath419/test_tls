@@ -1,0 +1,31 @@
+
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  port: 3306
+  sslmode: REQUIRED
+
+development:
+  <<: *default
+  username: apim@ddp-dev-wus2-mysql-01
+  password: AhPob3ETg8NEcnwY
+  database: apimatrix
+  host: dp-dev-wus2-mysql-01.mysql.database.azure.com
+
+devprg_development:
+  <<: *default
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  database: <%= ENV['DB_NAME'] %>
+  host: <%= ENV['DB_HOST'] %>
+  
+test:
+  <<: *default
+  database: Docker_test
+
+production:
+  <<: *default
+  database: Docker_production
+  username: Docker
+  password: <%= ENV['DOCKER_DATABASE_PASSWORD'] %>

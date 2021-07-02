@@ -1,0 +1,29 @@
+version: '2'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootroot
+      #MYSQL_DATABASE: apimatrix_dev_01
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    container_name: mysql-273  
+  app: 
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes: 
+      - ".:/app"
+    ports: 
+      - "3001:3000"
+    depends_on:
+      - db
+    links:
+      - db
+    environment:
+      DB_USER: root
+      DB_NAME: app
+      DB_PASSWORD: rootroot
+      DB_HOST: db
